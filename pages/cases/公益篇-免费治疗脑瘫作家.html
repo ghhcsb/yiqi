@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -14,6 +14,7 @@
     </style>
 
 <link rel="stylesheet" href="../../css/nav-style.css">
+<link rel="stylesheet" href="../../css/disable-video-download.css">
 <style>
     body {
         margin-top: 0;
@@ -21,6 +22,27 @@
     }
     .video-container {
         margin-top: 20px;
+    }
+    /* 直接在页面中添加禁用下载按钮的样式 */
+    video::-webkit-media-controls-enclosure {
+        overflow: hidden;
+    }
+    video::-webkit-media-controls-panel {
+        width: calc(100% + 30px);
+    }
+    video::-internal-media-controls-download-button {
+        display: none !important;
+    }
+    video::-webkit-media-controls-download-button {
+        display: none !important;
+    }
+    /* 针对 Firefox 浏览器 */
+    video::-moz-media-controls-download-button {
+        display: none !important;
+    }
+    /* 针对 Edge 浏览器 */
+    video::-ms-media-controls-download-button {
+        display: none !important;
     }
 </style>
 
@@ -36,10 +58,28 @@
 </div>
 
     <div class="video-container">
-        <video width="100%" controls>
+        <video width="100%" controls controlsList="nodownload" oncontextmenu="return false;">
             <source src="https://yiqi-yixinkang.oss-cn-beijing.aliyuncs.com/video/Case/%E5%85%AC%E7%9B%8A%E7%AF%87-%E5%85%8D%E8%B4%B9%E6%B2%BB%E7%96%97%E8%84%91%E7%98%AB%E4%BD%9C%E5%AE%B6.mp4" type="video/mp4">
             您的浏览器不支持视频播放
         </video>
     </div>
+<script>
+// 禁用视频下载按钮
+document.addEventListener('DOMContentLoaded', function() {
+    // 获取所有视频元素
+    var videos = document.querySelectorAll('video');
+    
+    // 为每个视频元素设置属性
+    videos.forEach(function(video) {
+        // 禁用右键菜单
+        video.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        // 设置 controlsList 属性，禁用下载按钮
+        video.setAttribute('controlsList', 'nodownload');
+    });
+});
+</script>
 </body>
 </html>

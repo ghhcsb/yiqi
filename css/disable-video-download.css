@@ -1,0 +1,32 @@
+/* CSS to hide download button in HTML5 video controls */
+video::-webkit-media-controls-enclosure {
+    overflow: hidden;
+}
+
+video::-webkit-media-controls-panel {
+    width: calc(100% + 30px);
+}
+
+/* Hide download button in different browsers */
+video::-internal-media-controls-download-button {
+    display: none;
+}
+
+video::-webkit-media-controls-download-button {
+    display: none;
+}
+
+/* Additional styling to ensure the download button is hidden */
+video::-webkit-media-controls-overflow-button {
+    display: none;
+}
+
+/* For Firefox */
+video::-moz-media-controls-download-button {
+    display: none;
+}
+
+/* For Edge */
+video::-ms-media-controls-download-button {
+    display: none;
+}

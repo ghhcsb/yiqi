@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -14,6 +14,7 @@
     </style>
 
 <link rel="stylesheet" href="../../css/common-style.css">
+<link rel="stylesheet" href="../../css/disable-video-download.css">
 <style>
     body {
         margin-top: 0;
@@ -21,6 +22,27 @@
     }
     .video-container {
         margin-top: 20px;
+    }
+    /* 直接在页面中添加禁用下载按钮的样式 */
+    video::-webkit-media-controls-enclosure {
+        overflow: hidden;
+    }
+    video::-webkit-media-controls-panel {
+        width: calc(100% + 30px);
+    }
+    video::-internal-media-controls-download-button {
+        display: none !important;
+    }
+    video::-webkit-media-controls-download-button {
+        display: none !important;
+    }
+    /* 针对 Firefox 浏览器 */
+    video::-moz-media-controls-download-button {
+        display: none !important;
+    }
+    /* 针对 Edge 浏览器 */
+    video::-ms-media-controls-download-button {
+        display: none !important;
     }
 </style>
 
@@ -36,10 +58,32 @@
 </div>
 
     <div class="video-container">
-        <video width="100%" controls>
+        <video width="100%" controls controlsList="nodownload" oncontextmenu="return false;">
             <source src="https://yiqi-yixinkang.oss-cn-beijing.aliyuncs.com/video/Product%20Introduction%20and%20Usage%20Instructions/%E8%B0%83%E7%90%86%E5%BF%83%E8%82%BA%E5%8A%9F%E8%83%BD%E6%B2%BB%E7%96%97.mp4" type="video/mp4">
             您的浏览器不支持视频播放
         </video>
     </div>
+<script>
+// 禁用视频下载按钮
+document.addEventListener('DOMContentLoaded', function() {
+    // 获取所有视频元素
+    var videos = document.querySelectorAll('video');
+    
+    // 为每个视频元素设置属性
+    videos.forEach(function(video) {
+        // 禁用右键菜单
+        video.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        // 设置 controlsList 属性，禁用下载按钮
+        video.setAttribute('controlsList', 'nodownload');
+        
+        // 添加其他属性以增强兼容性
+        video.setAttribute('disablePictureInPicture', '');
+        video.setAttribute('disableRemotePlayback', '');
+    });
+});
+</script>
 </body>
 </html>
